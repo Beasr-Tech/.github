@@ -55,18 +55,18 @@ Greenfield monorepo. No frameworks on the frontend. No ORMs on the backend. Ever
 The codebase is organised as a monorepo with isolated, single-responsibility modules.
 
 ```
-beasr-code/
-  beasr-web/           Web application (frontend + backend)
-  beasr-dashboard/     Internal operations dashboard
-  beasr-shared/        Cross-module constants, utilities, logging
-  beasr-vite-plugins/  Custom build pipeline plugins
-  beasr-deploy/        Deployment configuration and automation
-  beasr-server/        Server infrastructure
-  beasr-health/        Uptime and health monitoring
-  beasr-logs/          Centralised log management
-  beasr-sync/          Data synchronisation
-  beasr-scripts/       Tooling and maintenance scripts
-  beasr-assets/        Static assets and media
+codebase/
+  web/           Web application (frontend + backend)
+  dashboard/     Internal operations dashboard
+  shared/        Cross-module constants, utilities, logging
+  vite-plugins/  Custom build pipeline plugins
+  deploy/        Deployment configuration and automation
+  server/        Server infrastructure
+  health/        Uptime and health monitoring
+  logs/          Centralised log management
+  sync/          Data synchronisation
+  scripts/       Tooling and maintenance scripts
+  assets/        Static assets and media
 ```
 
 Frontend code follows strict architectural rules: base class inheritance for all managers and API clients, a centralised DOM factory instead of raw DOM access, barrel exports for cross-module boundaries, and a CSS token system with no hardcoded values. Backend follows the same discipline: base classes for repositories, controllers, AI agents, and HTTP clients. Every class extends a base. Every module exposes through an index.
