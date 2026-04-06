@@ -19,28 +19,42 @@ AI-assisted marketplace, membership system, partner ecosystem, and community.
 
 ---
 
-## Architecture
+## What Beasr is
 
-Greenfield monorepo. No frameworks on the frontend. No ORMs on the backend. Everything is built from base classes and composed upward.
+Beasr is a platform for people moving home in the UK. It combines a membership service, an AI concierge, a curated marketplace, a partner ecosystem, and a location-based community into one product. The goal is to make the process of moving house simpler, cheaper, and less stressful by putting the tools, the deals, and the local knowledge in one place.
 
-| Layer | Stack |
-|:------|:------|
-| **Frontend** | Vanilla JavaScript, custom DOM abstraction, CSS design system with token architecture |
-| **Backend** | Node.js, Express 5, PostgreSQL, Redis, session management, rate limiting |
-| **AI** | Multi-agent system with intent detection, prompt construction, and conversation management |
-| **Billing** | Stripe integration for subscription lifecycle, trials, and partner payouts |
-| **Build** | Vite 7 with custom plugin pipeline, asset processing, code analysis |
-| **Desktop** | Electron shell wrapping the web frontend |
-| **Ops** | Health monitoring, log aggregation, deployment automation, database migrations |
+The platform is built and run by a small team in the United Kingdom. Everything is built from the ground up: no third-party frontend framework, no ORM, no off-the-shelf page builders. The architecture is constraint-driven. Quality is enforced structurally, not by discipline alone.
 
-<br />
+---
+
+## Product
+
+**Calm Move Membership.** A subscription service for UK home movers. Freemium tier with premium access to an AI concierge, curated marketplace, and savings tracking with a money-back guarantee. The membership covers the full journey from first viewing to settled.
+
+**AI Concierge.** Five conversational agents with distinct expertise: property guidance, lifestyle and marketplace, community moderation, navigation, and general assistance. Each agent handles its own domain and hands off to the right specialist when a question crosses boundaries.
+
+**Marketplace.** Aggregated products across furniture, utilities, insurance, and home essentials. Affiliate network integration with a direct deal pipeline. Members get access to curated discounts and tracked savings.
+
+**Partner Ecosystem.** Estate agent plugins, influencer referral system, and vendor self-onboarding. Revenue share model. Automated compliance and payout workflows.
+
+**Chinwag.** A location-based community where movers share local knowledge: schools, parking, broadband, noise, neighbours. AI-moderated. Feeds back into the recommendation engine so the platform gets smarter the more people use it.
+
+---
+
+## How we build
+
+The codebase is a single monorepo. The frontend is vanilla JavaScript with a custom DOM abstraction and a CSS token system. The backend is Node.js and Express with PostgreSQL and Redis. The AI layer is built on Anthropic's Claude. The desktop client is Electron. Deployment runs on DigitalOcean with automated backups, health monitoring, and Discord notifications.
+
+Every change goes through an automated validation pipeline before it can be pushed. The pipeline checks code formatting, lint rules, type safety, dead code, architectural compliance, and structural conventions. There is no bypass. A check either passes or it blocks. The team treats this as a feature, not overhead: catching violations at authoring time is cheaper than catching them in production.
+
+The architecture is designed so that the right thing is the only available path. Limits are constants that validators read. Styles come from tokens that stylelint enforces. Classes extend bases that the pipeline checks. The system is shaped so that drift is structurally impossible rather than merely discouraged.
 
 <div align="center">
 
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES2024-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
-![Node.js](https://img.shields.io/badge/Node.js-22+-339933?style=flat-square&logo=nodedotjs&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-20_LTS-339933?style=flat-square&logo=nodedotjs&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-5-000000?style=flat-square&logo=express&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1?style=flat-square&logo=postgresql&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat-square&logo=postgresql&logoColor=white)
 ![Redis](https://img.shields.io/badge/Redis-7-DC382D?style=flat-square&logo=redis&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=flat-square&logo=vite&logoColor=white)
 ![Stripe](https://img.shields.io/badge/Stripe-Billing-635BFF?style=flat-square&logo=stripe&logoColor=white)
@@ -50,49 +64,14 @@ Greenfield monorepo. No frameworks on the frontend. No ORMs on the backend. Ever
 
 ---
 
-## Structure
-
-The codebase is organised as a monorepo with isolated, single-responsibility modules.
-
-```
-codebase/
-  web/           Web application (frontend + backend)
-  dashboard/     Internal operations dashboard
-  shared/        Cross-module constants, utilities, logging
-  vite-plugins/  Custom build pipeline plugins
-  deploy/        Deployment configuration and automation
-  server/        Server infrastructure
-  health/        Uptime and health monitoring
-  logs/          Centralised log management
-  sync/          Data synchronisation
-  scripts/       Tooling and maintenance scripts
-  assets/        Static assets and media
-```
-
-Frontend code follows strict architectural rules: base class inheritance for all managers and API clients, a centralised DOM factory instead of raw DOM access, barrel exports for cross-module boundaries, and a CSS token system with no hardcoded values. Backend follows the same discipline: base classes for repositories, controllers, AI agents, and HTTP clients. Every class extends a base. Every module exposes through an index.
-
----
-
-## Product Verticals
-
-**Calm Move Membership.** Subscription service for UK home movers. Freemium tier with premium access to AI concierge, curated marketplace, and savings tracking with a money-back guarantee.
-
-**Partner Ecosystem.** Estate agent plugins, influencer referral system, and vendor self-onboarding. Revenue share model over 18 months. Automated compliance, KYC, and payout workflows.
-
-**Chinwag.** Location-based community where movers share local knowledge. AI moderation. Feeds back into the recommendation engine.
-
-**Marketplace.** Aggregated products across furniture, utilities, insurance, and home essentials. Affiliate network integration with direct deal pipeline.
-
----
-
-## Security Posture
+## Security posture
 
 - HTTPS everywhere with TLS 1.3
 - Rate limiting and session hardening on all endpoints
 - GDPR, PECR, and Consumer Rights Act 2015 compliance
 - Stripe-managed payment tokenisation (no card data touches our servers)
-- Content Security Policy headers enforced
-- Automated security scanning in CI
+- Content Security Policy headers enforced at build time and runtime
+- Continuous health monitoring with automated alerting
 
 Verify independently:
 
